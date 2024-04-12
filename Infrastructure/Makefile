@@ -8,7 +8,7 @@ INFRA:= Infrastructure
 hello_world:
 	@echo "Hello world"
 
-Infra_Plan: format validate plan 
+Infra_Plan: workspace plan 
 
 destroy:
 	@cd $(INFRA) && terraform destroy -auto-approve
@@ -20,7 +20,7 @@ init:
 	terraform init
 
 workspace : 
-	@cd $(INFRA) && terraform workspace select ${workspace} 
+	terraform workspace select ${workspace} 
 
 plan:
 	terraform plan
