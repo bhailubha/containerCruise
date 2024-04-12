@@ -14,7 +14,7 @@ destroy:
 	@cd $(INFRA) && terraform destroy -auto-approve
 
 init_backend:
-	terraform init -backend-config="$(backend).s3.tfbackend"
+	cd Infrastructure && terraform init -backend-config="$(backend).s3.tfbackend"
 
 init:
 	terraform init
@@ -23,7 +23,7 @@ workspace :
 	terraform workspace select ${workspace} 
 
 plan:
-	terraform plan
+	cd Infrastructure && terraform plan
 
 apply:
 	@cd $(INFRA) && terraform apply -auto-approve
