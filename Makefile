@@ -14,7 +14,7 @@ destroy:
 	@cd $(INFRA) && terraform destroy -auto-approve
 
 init_backend:
-	terraform init -backend-config="$(backend).s3.tfbackend"
+	@cd $(INFRA) && terraform init -backend-config="$(backend).s3.tfbackend"
 
 init:
 	terraform init
