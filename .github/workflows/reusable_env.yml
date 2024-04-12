@@ -159,7 +159,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: initialize terraform
-        working-directory: ../
+        # working-directory: ../
         # run: terraform init -backend-config=${{inputs.environment}}.s3.tfbackend
         run: make init_backend backend=${{inputs.environment}}
 
