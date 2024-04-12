@@ -40,3 +40,18 @@ image_push:
 
 ssm:
 	bash ../scripts/ssm.sh
+
+
+ssm_param:
+ifeq ($(profile),)
+	@aws --region=us-west-2 ssm get-parameter --name ${ssm_prefix}${param} --with-decryption --output text --query Parameter.Value 
+else
+	@aws --region=us-west-2 --profile $(profile) ssm get-parameter --name ${ssm_prefix}${param} --with-decryption --output text --query Parameter.Value
+endif
+
+ecr:
+ifeq ($(profile),)
+	@aws ecr describe-repositories --repository-names $(name)
+else
+	@aws ecr describe-repositories --repository-names $(name) --profile $(profile)
+endif
