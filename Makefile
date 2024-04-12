@@ -20,10 +20,10 @@ init:
 	terraform init
 
 workspace : 
-	terraform workspace select ${workspace} 
+	@cd $(INFRA) && terraform workspace select ${workspace} 
 
 plan:
-	terraform plan
+	@cd $(INFRA) && terraform plan
 
 apply:
 	@cd $(INFRA) && terraform apply -auto-approve
