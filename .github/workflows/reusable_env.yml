@@ -203,9 +203,6 @@ jobs:
       #   if: ${{github.event_name == 'push'}}
       #   run: terraform apply -auto-approve
 
-      - name: workspace
-        run: make workspace workspace=${{inputs.workspace}} 
-
       - name: Plan
         run: make plan  
 
