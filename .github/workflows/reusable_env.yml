@@ -97,8 +97,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build image
-        run: make image_build name=${{env.ECR_REPO}} path="../auth"
+      # - name: Build image
+      #   run: make image_build name=${{env.ECR_REPO}} path="../auth"
         # run: docker build -t ${{env.ECR_REPO}}-repo .
 
   Deploy:
