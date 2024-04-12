@@ -23,7 +23,7 @@ workspace :
 	@cd $(INFRA) && terraform workspace select ${workspace} 
 
 plan:
-	@cd $(INFRA) && terraform plan
+	@cd $(INFRA) && ls
 
 apply:
 	@cd $(INFRA) && terraform apply -auto-approve
