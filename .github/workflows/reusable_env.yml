@@ -151,6 +151,7 @@ jobs:
         # Using SSM parameter to Set the Environment variables. 
         # REPLACE IT IF YOU WANT TO CHANGE ENV
       - name: Set variables with SSM parameter
+        working-directory: ../
         # run:  bash ../.github/workflows/ssm.sh
         run:  ssm_env=${{inputs.environment}} make ssm 
 
@@ -158,6 +159,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: initialize terraform
+        working-directory: ../
         # run: terraform init -backend-config=${{inputs.environment}}.s3.tfbackend
         run: make init_backend backend=${{inputs.environment}}
 
@@ -204,6 +206,7 @@ jobs:
       #   run: terraform apply -auto-approve
 
       - name: Plan
+        working-directory: ../
         run: make plan  
 
       # - name: Apply Terraform
