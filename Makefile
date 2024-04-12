@@ -7,7 +7,7 @@ export ssm_env?=sandbox
 hello_world:
 	@echo "Hello world"
 
-Infra_Plan: workspace format validate plan 
+Infra_Plan: format validate plan 
 
 destroy:
 	terraform destroy -auto-approve
