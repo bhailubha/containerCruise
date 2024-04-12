@@ -205,7 +205,6 @@ jobs:
       - name: Plan
         run: make Infra_Plan workspace=${{inputs.workspace}} 
 
-        # removed temporary
       # - name: Apply Terraform
       #   if: ${{github.event_name == 'push'}}
       #   run: make apply
