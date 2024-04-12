@@ -206,7 +206,7 @@ jobs:
       #   run: terraform apply -auto-approve
 
       - name: Plan
-        working-directory: ../
+        # working-directory: ../
         run: make plan  
 
       # - name: Apply Terraform
