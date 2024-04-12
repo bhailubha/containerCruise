@@ -158,8 +158,8 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: initialize terraform
-        working-directory: ./Infrastructure
-        run: terraform init -backend-config=${{inputs.environment}}.s3.tfbackend
+        # run: terraform init -backend-config=${{inputs.environment}}.s3.tfbackend
+        run: make init_backend backend=${{inputs.environment}}
 
         # Using Composite action for ECR.
       - name: Check, Create & Login to ECR.
@@ -204,7 +204,6 @@ jobs:
       #   run: terraform apply -auto-approve
 
       - name: Plan
-        working-directory: .
         run: make Infra_Plan workspace=${{inputs.workspace}} 
 
       # - name: Apply Terraform

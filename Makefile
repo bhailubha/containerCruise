@@ -3,6 +3,7 @@
 export TF_VAR_profile?=harshvardhan 
 export TF_VAR_environment=sandbox
 export ssm_env?=sandbox
+INFRA:= Infrastructure
 
 hello_world:
 	@echo "Hello world"
@@ -10,25 +11,28 @@ hello_world:
 Infra_Plan: format validate plan 
 
 destroy:
-	terraform destroy -auto-approve
+	@cd $(INFRA) && terraform destroy -auto-approve
+
+init_backend:
+	@cd $(INFRA) && terraform init -backend-config=$(backend).s3.tfbackend
 
 init:
-	terraform init
+	@cd $(INFRA) && terraform init
 
 workspace : 
-	terraform workspace select ${workspace} 
+	@cd $(INFRA) && terraform workspace select ${workspace} 
 
 plan:
-	terraform plan
+	@cd $(INFRA) && terraform plan
 
 apply:
-	terraform apply -auto-approve
+	@cd $(INFRA) && terraform apply -auto-approve
 
 format:
-	terraform fmt -recursive
+	@cd $(INFRA) && terraform fmt -recursive
 
 validate:
-	terraform validate
+	@cd $(INFRA) && terraform validate
 
 docker: image_build image_push
 
