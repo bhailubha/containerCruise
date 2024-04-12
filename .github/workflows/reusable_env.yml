@@ -159,7 +159,7 @@ jobs:
 
       - name: initialize terraform
         # run: terraform init -backend-config=${{inputs.environment}}.s3.tfbackend
-        run: make init_backend backend=${{inputs.environment}}
+        run: make init
 
         # Using Composite action for ECR.
       - name: Check, Create & Login to ECR.
