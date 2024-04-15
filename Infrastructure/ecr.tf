@@ -1,8 +1,8 @@
-# module "harshvardhan-repo" {
-#   source = "./modules/ecr"
-#   name = "harshvardhan-repo"
-#   force_delete = true
-# }
+module "harshvardhan-repo" {
+  source = "./modules/ecr"
+  name = var.ecr_repo
+  force_delete = true
+}
 
 # resource "null_resource" "run_comand_one" {
 #   depends_on = [ module.harshvardhan-repo]
