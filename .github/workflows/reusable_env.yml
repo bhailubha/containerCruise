@@ -102,6 +102,7 @@ jobs:
         # run: docker build -t ${{env.ECR_REPO}}-repo .
 
   Deploy:
+    timeout-minutes: 30
     needs: [Build, path]
     if: ${{ always() && ( needs.Build.result == 'success' && ( needs.path.result == 'skipped' || needs.path.outputs.infra == 'true' )) }}
     environment: ${{inputs.environment}}
@@ -163,11 +164,11 @@ jobs:
         run: make init_backend backend=${{inputs.environment}}
 
         # Using Composite action for ECR.
-      - name: Check, Create & Login to ECR.
-        id: login-ecr
-        uses: ./.github/actions/ecr
-        with:
-          ecr : $TF_VAR_ecr_repo
+      # - name: Check, Create & Login to ECR.
+      #   id: login-ecr
+      #   uses: ./.github/actions/ecr
+      #   with:
+      #     ecr : $TF_VAR_ecr_repo
 
       # - name: Check if there's an ECR already
       #   id: ECR
@@ -178,12 +179,12 @@ jobs:
       #   if: ${{steps.ECR.outcome != 'success'}}
       #   run: aws ecr create-repository --repository-name $TF_VAR_ecr_repo --region $TF_VAR_region
 
-      # - name: Create ECR
-      #   run: terraform apply -target=module.harshvardhan-repo
+      - name: Create ECR
+        run: terraform apply -target=module.harshvardhan-repo
 
-      # - name: Login to Amazon ECR
-      #   id: login-ecr
-      #   uses: aws-actions/amazon-ecr-login@v2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push docker image to Amazon ECR
         env:
