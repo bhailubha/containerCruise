@@ -8,13 +8,13 @@ INFRA:= Infrastructure
 hello_world:
 	@echo "Hello world"
 
-Infra_Plan: workspace plan 
+Infra_Plan: workspace format validate plan 
 
 destroy:
-	@cd $(INFRA) && terraform destroy -auto-approve
+	terraform destroy -auto-approve
 
 init_backend:
-	cd Infrastructure && terraform init -backend-config="$(backend).s3.tfbackend"
+	terraform init -backend-config="$(backend).s3.tfbackend"
 
 init:
 	terraform init
@@ -23,16 +23,16 @@ workspace :
 	terraform workspace select ${workspace} 
 
 plan:
-	cd Infrastructure && terraform plan
+	terraform plan
 
 apply:
-	@cd $(INFRA) && terraform apply -auto-approve
+	terraform apply -auto-approve
 
 format:
-	@cd $(INFRA) && terraform fmt -recursive
+	terraform fmt -recursive
 
 validate:
-	@cd $(INFRA) && terraform validate
+	terraform validate
 
 docker: image_build image_push
 
