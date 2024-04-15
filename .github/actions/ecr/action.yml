@@ -14,7 +14,6 @@ outputs:
     value: ${{ steps.login-ecr.outputs.registry }}
 
 runs:
-
   using: "composite"
   steps:
   
@@ -32,7 +31,7 @@ runs:
       - name: Create ECR
         shell: bash
         # if: ${{steps.ECR.outcome != 'success'}}
-        run: terraform apply -target=module.${{ inputs.ecr }}
+        run: cd ${{github.action_path}} && terraform apply -target=module.${{ inputs.ecr }}
 
       - id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
