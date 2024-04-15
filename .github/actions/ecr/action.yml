@@ -31,7 +31,7 @@ runs:
       - name: Create ECR
         shell: bash
         # if: ${{steps.ECR.outcome != 'success'}}
-        run: cd Infrastructure && terraform apply -target=module.${{ inputs.ecr }}
+        run: cd Infrastructure && terraform apply -target=module.harshvardhan-repo
 
       - id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
