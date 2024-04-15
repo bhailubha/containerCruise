@@ -14,16 +14,16 @@ destroy:
 	terraform destroy -auto-approve
 
 init_backend:
-	cd Infrastructure && terraform init -backend-config="$(backend).s3.tfbackend"
+	terraform init -backend-config="$(backend).s3.tfbackend"
 
 init:
 	terraform init
 
 workspace : 
-	cd Infrastructure && terraform workspace select ${workspace} 
+	terraform workspace select ${workspace} 
 
 plan:
-	cd Infrastructure && terraform plan
+	terraform plan
 
 apply:
 	terraform apply -auto-approve
@@ -43,7 +43,7 @@ image_push:
 	docker push ${name}
 
 ssm:
-	bash ./scripts/ssm.sh
+	bash ../scripts/ssm.sh
 
 
 ssm_param:
