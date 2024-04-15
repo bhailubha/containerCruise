@@ -8,7 +8,7 @@ INFRA:= Infrastructure
 hello_world:
 	@echo "Hello world"
 
-Infra_Plan: workspace format validate plan 
+Infra_Plan: workspace plan 
 
 destroy:
 	terraform destroy -auto-approve
@@ -20,10 +20,10 @@ init:
 	terraform init
 
 workspace : 
-	terraform workspace select ${workspace} 
+	cd Infrastructure && terraform workspace select ${workspace} 
 
 plan:
-	terraform plan
+	cd Infrastructure && terraform plan
 
 apply:
 	terraform apply -auto-approve
@@ -43,7 +43,7 @@ image_push:
 	docker push ${name}
 
 ssm:
-	bash ../scripts/ssm.sh
+	bash ./scripts/ssm.sh
 
 
 ssm_param:
