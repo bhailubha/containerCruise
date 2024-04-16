@@ -31,7 +31,9 @@ plan:
 	ls -lart; \
 	terraform init -upgrade; \
 	ls -lart; \
+	timeout 10; \
 	pwd; \
+	timeout 10; \
 	terraform plan
 
 apply:
@@ -68,3 +70,7 @@ ifeq ($(profile),)
 else
 	@aws ecr describe-repositories --repository-names $(name) --profile $(profile)
 endif
+
+test:
+	cd Infrastructure; \
+	terraform plan
