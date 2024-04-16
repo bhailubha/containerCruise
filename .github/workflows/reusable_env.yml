@@ -102,7 +102,7 @@ jobs:
         # run: docker build -t ${{env.ECR_REPO}}-repo .
 
   Deploy:
-    timeout-minutes: 30
+    timeout-minutes: 7
     needs: [Build, path]
     if: ${{ always() && ( needs.Build.result == 'success' && ( needs.path.result == 'skipped' || needs.path.outputs.infra == 'true' )) }}
     environment: ${{inputs.environment}}
@@ -212,7 +212,7 @@ jobs:
 
       - name: Plan
         # working-directory: ../
-        run: make Infra_Plan 
+        run: make plan 
 
       - name: Apply Terraform
         if: ${{github.event_name == 'push'}}
