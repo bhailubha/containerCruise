@@ -151,9 +151,9 @@ jobs:
 
         # Using SSM parameter to Set the Environment variables. 
         # REPLACE IT IF YOU WANT TO CHANGE ENV
-      # - name: Set variables with SSM parameter
-      # #   # run:  bash ../.github/workflows/ssm.sh
-      #   run:  ssm_env=${{inputs.environment}} make ssm 
+      - name: Set variables with SSM parameter
+        # run:  bash ../.github/workflows/ssm.sh
+        run:  ssm_env=${{inputs.environment}} make ssm 
       - name: Install terraform 
         run: |
           wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg

@@ -54,8 +54,8 @@ image_build:
 image_push:
 	docker push ${name}
 
-# ssm:
-# 	bash ./scripts/ssm.sh
+ssm:
+	bash ./scripts/ssm.sh
 
 
 ssm_param:
