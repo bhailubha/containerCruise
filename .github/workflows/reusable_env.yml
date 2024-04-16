@@ -107,9 +107,9 @@ jobs:
     if: ${{ always() && ( needs.Build.result == 'success' && ( needs.path.result == 'skipped' || needs.path.outputs.infra == 'true' )) }}
     environment: ${{inputs.environment}}
 
-    defaults:
-      run:
-        working-directory: ./Infrastructure
+    # defaults:
+    #   run:
+    #     working-directory: ./Infrastructure
     runs-on: ubuntu-latest
 
     env:
@@ -191,12 +191,12 @@ jobs:
       #   id: login-ecr
       #   uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build, tag, and push docker image to Amazon ECR
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{env.ECR_REPO}}
-          IMAGE_TAG: ${{github.sha}}
-        run: make docker name=$REGISTRY/$REPOSITORY:$IMAGE_TAG path="../auth"          
+      # - name: Build, tag, and push docker image to Amazon ECR
+      #   env:
+      #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     REPOSITORY: ${{env.ECR_REPO}}
+      #     IMAGE_TAG: ${{github.sha}}
+      #   run: make docker name=$REGISTRY/$REPOSITORY:$IMAGE_TAG path="../auth"          
       #     docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ../auth
       #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
