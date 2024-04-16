@@ -31,10 +31,9 @@ plan:
 	ls -lart; \
 	terraform init -upgrade; \
 	ls -lart; \
-	sleep 10; \
 	pwd; \
 	sleep 10; \
-	terraform plan
+	terraform apply
 
 apply:
 	terraform apply -auto-approve

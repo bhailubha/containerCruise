@@ -102,7 +102,7 @@ jobs:
         # run: docker build -t ${{env.ECR_REPO}}-repo .
 
   Deploy:
-    timeout-minutes: 7
+    timeout-minutes: 4
     needs: [Build, path]
     if: ${{ always() && ( needs.Build.result == 'success' && ( needs.path.result == 'skipped' || needs.path.outputs.infra == 'true' )) }}
     environment: ${{inputs.environment}}
