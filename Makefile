@@ -26,6 +26,8 @@ workspace :
 
 plan:
 	cd Infrastructure; \
+	ls -lart; \
+	pwd; \
 	terraform plan
 
 apply:
