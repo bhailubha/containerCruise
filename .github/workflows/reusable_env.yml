@@ -200,20 +200,20 @@ jobs:
       #     docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ../auth
       #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-      - name: Select workspace
-        run: terraform workspace select ${{inputs.workspace}}
+      # - name: Select workspace
+      #   run: terraform workspace select ${{inputs.workspace}}
 
-      - name: plan terraform
-        run: terraform plan
+      # - name: plan terraform
+      #   run: terraform plan
 
-      - name: Apply terraform
-        if: ${{github.event_name == 'push'}}
-        run: terraform apply -auto-approve
-
-      # - name: Plan
-      #   # working-directory: ../
-      #   run: make Infra_Plan 
-
-      # - name: Apply Terraform
+      # - name: Apply terraform
       #   if: ${{github.event_name == 'push'}}
-      #   run: make apply
+      #   run: terraform apply -auto-approve
+
+      - name: Plan
+        # working-directory: ../
+        run: make Infra_Plan 
+
+      - name: Apply Terraform
+        if: ${{github.event_name == 'push'}}
+        run: make apply
