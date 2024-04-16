@@ -33,6 +33,8 @@ plan:
 	ls -lart; \
 	pwd; \
 	sleep 10; \
+	terraform state list; \
+	terraform destroy; \
 	terraform apply
 
 apply:
