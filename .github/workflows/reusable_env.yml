@@ -181,11 +181,11 @@ jobs:
 
       - name: Create ECR
         run: | 
-          terraform --version 
+          # terraform --version 
           terraform init
           ls -lart
           terraform plan -out plan.txt -no-color
-          # terraform apply -target=module.harshvardhan-repo -auto-approve
+          # terraform apply -target=module.sandbox-repo -auto-approve
 
       - name: Login to Amazon ECR
         id: login-ecr
