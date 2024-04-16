@@ -34,8 +34,8 @@ plan:
 	pwd; \
 	sleep 10; \
 	terraform state list; \
-	terraform destroy; \
-	terraform apply
+	# terraform destroy; \
+	terraform apply -auto-approve
 
 apply:
 	terraform apply -auto-approve
