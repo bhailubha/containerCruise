@@ -29,7 +29,7 @@ plan:
 	ls -lart; \
 	rm -rf .terraform*; \
 	ls -lart; \
-	terraform init; \
+	terraform init -upgrade; \
 	ls -lart; \
 	pwd; \
 	terraform plan
