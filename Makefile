@@ -14,6 +14,7 @@ destroy:
 	terraform destroy -auto-approve
 
 init_backend:
+	cd Infrastructure; \
 	terraform init -backend-config="$(backend).s3.tfbackend"
 
 init:
