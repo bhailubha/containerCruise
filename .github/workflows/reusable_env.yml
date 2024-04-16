@@ -183,7 +183,7 @@ jobs:
         run: | 
           terraform --version 
           terraform init
-          terraform plan -out=plan.txt --no-color
+          terraform plan -out plan.txt -no-color
           # terraform apply -target=module.harshvardhan-repo -auto-approve
 
       - name: Login to Amazon ECR
