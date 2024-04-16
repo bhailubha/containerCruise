@@ -29,7 +29,7 @@ plan:
 	ls -lart; \
 	rm -rf .terraform*; \
 	ls -lart; \
-	terraform init -upgrade; \
+	terraform init -backend-config="$(backend).s3.tfbackend"; \
 	ls -lart; \
 	pwd; \
 	sleep 10; \
