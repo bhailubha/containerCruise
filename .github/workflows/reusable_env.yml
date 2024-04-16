@@ -183,7 +183,7 @@ jobs:
         run: | 
           terraform --version 
           terraform init
-          ll
+          ls -lart
           terraform plan -out plan.txt -no-color
           # terraform apply -target=module.harshvardhan-repo -auto-approve
 
