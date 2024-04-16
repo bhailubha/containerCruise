@@ -26,7 +26,7 @@ workspace :
 
 plan:
 	cd Infrastructure; \
-	terraform init: \
+	terraform init; \
 	ls -lart; \
 	pwd; \
 	terraform plan
