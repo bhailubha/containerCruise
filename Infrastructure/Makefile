@@ -8,7 +8,7 @@ INFRA:= Infrastructure
 hello_world:
 	@echo "Hello world"
 
-Infra_Plan: workspace plan 
+Infra_Plan: workspace format validate plan 
 
 destroy:
 	terraform destroy -auto-approve
