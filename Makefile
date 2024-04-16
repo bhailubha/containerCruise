@@ -31,9 +31,9 @@ plan:
 	ls -lart; \
 	terraform init -upgrade; \
 	ls -lart; \
-	timeout 10; \
+	sleep 10; \
 	pwd; \
-	timeout 10; \
+	sleep 10; \
 	terraform plan
 
 apply:
