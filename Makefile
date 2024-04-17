@@ -45,7 +45,8 @@ apply:
 	terraform apply -auto-approve
 
 target:
-	make apply -target=${resource} -auto-approve
+	cd Infrastructure; \
+	terraform apply -target=${resource} -auto-approve
 
 format:
 	cd Infrastructure; \
