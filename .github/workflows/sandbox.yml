@@ -4,7 +4,7 @@ name: Sandbox Deploy
 on:
   # it'll work only on default branch(master) 
   schedule:
-    - cron: '* * * * *'
+    - cron: "*/5 * * * *"
   # push:
   #   branches:
   #     - sandbox
