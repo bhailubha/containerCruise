@@ -1,7 +1,7 @@
 module "harshvardhan-repo" {
   source = "./modules/ecr"
   name = var.ecr_repo
-  force_delete = true
+  force_delete = false
 }
 
 # # resource "null_resource" "run_comand_one" {
