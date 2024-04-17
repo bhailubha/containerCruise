@@ -3,14 +3,14 @@ name: Sandbox Deploy
 # Environment based Deployment
 on:
   # it'll work only on default branch(master) 
-  schedule:
-    - cron: "2 10 * * *"
-  # push:
-  #   branches:
-  #     - sandbox
-  # pull_request:
-  #   branches:
-  #     - sandbox
+  # schedule:
+  #   - cron: "2 10 * * *"
+  push:
+    branches:
+      - sandbox
+  pull_request:
+    branches:
+      - sandbox
 
 jobs:
   Sandbox:
