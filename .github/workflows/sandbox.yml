@@ -1,0 +1,162 @@
+name: Sandbox Deploy
+
+# Environment based Deployment
+on:
+  # it'll work only on default branch(master) 
+  schedule:
+    - cron: "*/5 * * * *"
+  # push:
+  #   branches:
+  #     - sandbox
+  # pull_request:
+  #   branches:
+  #     - sandbox
+
+jobs:
+  Sandbox:
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+
+    uses: ./.github/workflows/reusable_env.yml
+    with:
+      environment: "sandbox"
+      workspace: "sandbox"
+      backend: "sandbox"
+
+    secrets:
+      RDS_USERNAME: ${{secrets.RDS_USERNAME}}
+      RDS_PASSWORD: ${{secrets.RDS_PASSWORD}}
+      AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
+      OIDC_ROLE : ${{secrets.OIDC_ROLE}}
+      
+# name: Sandbox Deploy
+
+# on:
+#   workflow_dispatch:
+#   push:
+#     branches:
+#       - sandbox
+#   pull_request:
+#     branches:
+#       - sandbox
+
+# permissions:
+#   id-token: write
+#   contents: read
+
+# env:
+#   RDS_USERNAME: ${{secrets.RDS_USERNAME}}
+#   RDS_PASSWORD: ${{secrets.RDS_PASSWORD}}
+#   AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
+#   ECR_REPO: "sandbox-repo"
+#   TF_VAR_ecr_repo: "sandbox-repo"
+
+# jobs:
+#   path:
+#     if: github.event_name == 'pull_request'
+#     runs-on: ubuntu-latest
+#     permissions:
+#       pull-requests: read
+#     outputs:
+#       infra: ${{ steps.filter.outputs.infra}}
+#       frontend: ${{ steps.filter.outputs.frontend }}
+#     steps:
+#       - uses: dorny/paths-filter@v3
+#         id: filter
+#         with:
+#           filters: |
+#             frontend:
+#               - 'auth/**'
+#             infra:
+#               - 'Infrastructure/**'
+
+#   Build:
+#     if: ${{ always() && ( needs.path.result == 'skipped' || needs.path.outputs.frontend == 'true' ) }}
+#     needs: path
+#     environment: sandbox
+
+#     defaults:
+#       run:
+#         working-directory: ./auth
+
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+
+#       - name: Build image
+#         run: docker build -t ${{env.ECR_REPO}}-repo .
+
+#   Deploy:
+#     needs: [Build, path]
+#     if: ${{ always() && (needs.path.result == 'skipped' || needs.path.outputs.infra == 'true') }}
+#     environment: sandbox
+
+#     defaults:
+#       run:
+#         working-directory: ./Infrastructure
+#     runs-on: ubuntu-latest
+
+#     env:
+#       TF_VAR_environment: sandbox
+#       TF_VAR_tag: ${{github.sha}}
+#       TF_VAR_profile: "harsh"
+#       TF_VAR_region: "us-west-2"
+#       TF_VAR_account_id: ${{secrets.AWS_ACCOUNT_ID}}
+#       TF_VAR_username: ${{secrets.RDS_USERNAME}}
+#       TF_VAR_password: ${{secrets.RDS_PASSWORD}}
+#       workspace: default
+#       backend: sandbox
+
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v4
+#         with:
+#           role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/OIDC_Connect
+#           aws-region: us-west-2
+
+#       - name: Get Identity
+#         run: aws sts get-caller-identity
+
+#       - name: install Terraform
+#         uses: hashicorp/setup-terraform@v3
+
+#       - name: initialize terraform
+#         run: terraform init -backend-config=sandbox.s3.tfbackend
+
+#       - name: Check if there's an ECR already
+#         id: ECR
+#         continue-on-error: true
+#         run: aws ecr describe-repositories --repository-names $TF_VAR_ecr_repo
+
+#       - name: Create ECR
+#         if: ${{steps.ECR.outcome != 'success'}}
+#         run: aws ecr create-repository --repository-name $TF_VAR_ecr_repo --region $TF_VAR_region
+
+#       - name: Login to Amazon ECR
+#         id: login-ecr
+#         uses: aws-actions/amazon-ecr-login@v2
+
+#       - name: Build, tag, and push docker image to Amazon ECR
+#         env:
+#           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#           REPOSITORY: "sandbox-repo"
+#           IMAGE_TAG: ${{github.sha}}
+#         run: |
+#           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ../auth
+#           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+#       - name: Select workspace
+#         run: terraform workspace select default
+
+#       - name: plan terraform
+#         run: terraform plan
+
+#       - name: Apply terraform
+#         if: ${{github.event_name == 'push'}}
+#         run: terraform apply -auto-approve
