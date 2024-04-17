@@ -182,7 +182,7 @@ jobs:
       #   run: aws ecr create-repository --repository-name $TF_VAR_ecr_repo --region $TF_VAR_region
 
       - name: Create ECR
-        run: make apply resource=module.harshvardhan-repo
+        run: make target resource=module.harshvardhan-repo
 
       - name: Login to Amazon ECR
         id: login-ecr
