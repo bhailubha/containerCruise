@@ -25,3 +25,4 @@ done
 
 echo "Inside ssm sh File";
 ls -lart;
+cat terraform.tfvars;

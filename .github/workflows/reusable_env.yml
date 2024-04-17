@@ -161,6 +161,7 @@ jobs:
         run: |
            ssm_env=${{inputs.environment}} make ssm 
            ls -lart
+           cat terraform.tfvars
 
       - name: initialize terraform
         # working-directory: ../
