@@ -158,9 +158,7 @@ jobs:
         # REPLACE IT IF YOU WANT TO CHANGE ENV
       - name: Set variables with SSM parameter
       #   # run:  bash ../.github/workflows/ssm.sh
-        run: |
-           ssm_env=${{inputs.environment}} make ssm 
-           ls -lart
+        run:  ssm_env=${{inputs.environment}} make ssm 
 
       - name: initialize terraform
         # working-directory: ../
@@ -168,11 +166,11 @@ jobs:
         run: make init_backend backend=${{inputs.environment}}
 
         # Using Composite action for ECR.
-      # - name: Check, Create & Login to ECR.
-      #   id: login-ecr
-      #   uses: ./.github/actions/ecr
-      #   with:
-      #     ecr : $TF_VAR_ecr_repo
+      - name: Check, Create & Login to ECR.
+        id: login-ecr
+        uses: ./.github/actions/ecr
+        with:
+          ecr : $TF_VAR_ecr_repo
 
       # - name: Check if there's an ECR already
       #   id: ECR
@@ -195,12 +193,12 @@ jobs:
       #   id: login-ecr
       #   uses: aws-actions/amazon-ecr-login@v2
 
-      # - name: Build, tag, and push docker image to Amazon ECR
-      #   env:
-      #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     REPOSITORY: ${{env.ECR_REPO}}
-      #     IMAGE_TAG: ${{github.sha}}
-      #   run: make docker name=$REGISTRY/$REPOSITORY:$IMAGE_TAG path="./auth"          
+      - name: Build, tag, and push docker image to Amazon ECR
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{env.ECR_REPO}}
+          IMAGE_TAG: ${{github.sha}}
+        run: make docker name=$REGISTRY/$REPOSITORY:$IMAGE_TAG path="./auth"          
       #     docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ../auth
       #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
@@ -214,10 +212,10 @@ jobs:
       #   if: ${{github.event_name == 'push'}}
       #   run: terraform apply -auto-approve
 
-      # - name: Plan
-      #   # working-directory: ../
-      #   run: make Infra_Plan
+      - name: Plan
+        # working-directory: ../
+        run: make Infra_Plan
 
-      # - name: Apply Terraform
-      #   if: ${{github.event_name == 'push'}}
-      #   run: make apply
+      - name: Apply Terraform
+        if: ${{github.event_name == 'push'}}
+        run: make apply

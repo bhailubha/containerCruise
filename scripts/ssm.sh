@@ -22,8 +22,3 @@ for param in "${PARAMS[@]}"; do
     # echo "TF_VAR_$param=${value}" >> $GITHUB_ENV
     echo "$param = \"$value\"" >> "$TFVARS_FILE"
 done
-
-echo "Inside ssm sh File";
-ls -lart;
-cd Infrastructure;
-cat terraform.tfvars;
