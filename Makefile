@@ -8,7 +8,7 @@ INFRA:= Infrastructure
 hello_world:
 	@echo "Hello world"
 
-Infra_Plan: workspace init_backend plan 
+Infra_Plan: workspace format validate plan 
 
 destroy:
 	terraform destroy -auto-approve
@@ -26,24 +26,30 @@ workspace :
 
 plan:
 	cd Infrastructure; \
-	ls -lart; \
-	rm -rf .terraform*; \
-	ls -lart; \
-	terraform init -backend-config="$(backend).s3.tfbackend"; \
-	ls -lart; \
-	pwd; \
-	sleep 10; \
-	terraform state list; \
-	# terraform destroy; \
-	terraform apply -auto-approve
+	terraform plan;
+
+	# cd Infrastructure; \
+	# ls -lart; \
+	# rm -rf .terraform*; \
+	# ls -lart; \
+	# terraform init -backend-config="$(backend).s3.tfbackend"; \
+	# ls -lart; \
+	# pwd; \
+	# sleep 10; \
+	# terraform state list; \
+	# # terraform destroy; \
+	# terraform apply -auto-approve
 
 apply:
+	cd Infrastructure; \
 	terraform apply -auto-approve
 
 format:
+	cd Infrastructure; \
 	terraform fmt -recursive
 
 validate:
+	cd Infrastructure; \
 	terraform validate
 
 docker: image_build image_push
@@ -71,7 +77,3 @@ ifeq ($(profile),)
 else
 	@aws ecr describe-repositories --repository-names $(name) --profile $(profile)
 endif
-
-test:
-	cd Infrastructure; \
-	terraform plan
