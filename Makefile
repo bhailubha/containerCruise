@@ -44,6 +44,9 @@ apply:
 	cd Infrastructure; \
 	terraform apply -auto-approve
 
+target:
+	make apply -target=${resource} -auto-approve
+
 format:
 	cd Infrastructure; \
 	terraform fmt -recursive
