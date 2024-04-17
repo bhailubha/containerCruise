@@ -50,7 +50,6 @@ variable "container-name" {
 
 # RDS Database Username 
 variable "username" {
-  default = "harshvardhan"
   type = string
   # sensitive = true
 }
@@ -58,7 +57,6 @@ variable "username" {
 # Rds Database Password
 variable "password" {
   type      = string
-  default = "test"
   sensitive = true
 }
 
